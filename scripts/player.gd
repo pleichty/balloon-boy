@@ -1,21 +1,30 @@
 extends CharacterBody2D
 
+@onready var balloon_1: Sprite2D = %balloon1
+@onready var balloon_2: Sprite2D = %balloon2
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
+var jumps = 0
+var balloons = 2
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _physics_process(delta: float) -> void:
+	
+	if (balloons == 1):
+		balloon_2.visible = false
+		balloon_1.visible = true
+	elif (balloons == 0):
+		balloon_1.visible = false
+	
 	# Add the gravity.
-	if not is_on_floor():
-		print(get_gravity())
-		
+	if not is_on_floor():		
 		velocity += get_gravity() * delta
-		print("velocity", velocity)
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and jumps < 1:
+		jumps += 1
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -32,6 +41,7 @@ func _physics_process(delta: float) -> void:
 	# Play animation
 	
 	if is_on_floor():
+		jumps = 0
 		if direction == 0:
 			animated_sprite.play("idle")
 		else:
