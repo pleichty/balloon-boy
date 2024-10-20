@@ -6,6 +6,8 @@ extends CharacterBody2D
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 var balloons = 2
+var balloonPumps = 0
+var isPumping = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -22,7 +24,14 @@ func updateBalloonsVisibility() -> void:
 
 func blowUpBalloons() -> void:
 	if(balloons < 2):
-		balloons += 1
+		isPumping = true
+		if(balloonPumps < 6):
+			balloonPumps += 1
+		else:
+			balloonPumps = 0
+			balloons += 1
+	else:
+		isPumping = false
 	updateBalloonsVisibility()
 
 func enemyHit() -> void:
@@ -54,8 +63,9 @@ func _physics_process(delta: float) -> void:
 		
 		
 	# Play animation
-	
-	if is_on_floor():
+	if(isPumping == true):
+		animated_sprite.play("pumping")
+	elif is_on_floor():
 		if direction == 0:
 			animated_sprite.play("idle")
 		else:
