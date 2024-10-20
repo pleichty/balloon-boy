@@ -5,26 +5,50 @@ extends CharacterBody2D
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
-var jumps = 0
 var balloons = 2
+var balloonPumps = 0
+var isPumping = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-func _physics_process(delta: float) -> void:
-	
+func updateBalloonsVisibility() -> void:
+	if(balloons == 2):
+		balloon_1.visible = false
+		balloon_2.visible = true
 	if (balloons == 1):
-		balloon_2.visible = false
 		balloon_1.visible = true
+		balloon_2.visible = false
 	elif (balloons == 0):
 		balloon_1.visible = false
+		balloon_2.visible = false
+
+func blowUpBalloons() -> void:
+	if(balloons < 2):
+		isPumping = true
+		if(balloonPumps < 6):
+			balloonPumps += 1
+		else:
+			balloonPumps = 0
+			balloons += 1
+	else:
+		isPumping = false
+	updateBalloonsVisibility()
+
+func enemyHit() -> void:
+	balloons -= 1
+	updateBalloonsVisibility()
+	if(balloons < 0):
+		GameManager.handlePlayerDeath()
+
+
+func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if not is_on_floor():		
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and jumps < 1:
-		jumps += 1
+	if Input.is_action_just_pressed("jump"):
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -39,9 +63,9 @@ func _physics_process(delta: float) -> void:
 		
 		
 	# Play animation
-	
-	if is_on_floor():
-		jumps = 0
+	if(isPumping == true):
+		animated_sprite.play("pumping")
+	elif is_on_floor():
 		if direction == 0:
 			animated_sprite.play("idle")
 		else:
