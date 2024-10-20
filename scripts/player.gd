@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var hit_timer: Timer = $HitTimer
 @onready var balloon_1: Sprite2D = %balloon1
 @onready var balloon_2: Sprite2D = %balloon2
 
@@ -10,6 +11,9 @@ var balloonPumps = 0
 var isPumping = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+func stopPumping() -> void:
+	isPumping = false
 
 func updateBalloonsVisibility() -> void:
 	if(balloons == 2):
@@ -25,6 +29,7 @@ func updateBalloonsVisibility() -> void:
 func blowUpBalloons() -> void:
 	if(balloons < 2):
 		isPumping = true
+		animated_sprite.play("pumping")
 		if(balloonPumps < 6):
 			balloonPumps += 1
 		else:
@@ -35,20 +40,27 @@ func blowUpBalloons() -> void:
 	updateBalloonsVisibility()
 
 func enemyHit() -> void:
-	balloons -= 1
-	updateBalloonsVisibility()
-	if(balloons < 0):
-		GameManager.handlePlayerDeath()
+	print('hit_timer.is_stopped()', hit_timer.is_stopped())
+	if(hit_timer.is_stopped()):	
+		hit_timer.start();
+		balloons -= 1
+		updateBalloonsVisibility()
+		if(balloons < 0):
+			GameManager.handlePlayerDeath()
 
 
 func _physics_process(delta: float) -> void:
-	
 	# Add the gravity.
 	if not is_on_floor():		
 		velocity += get_gravity() * delta
-
+		
+	if(isPumping):
+		move_and_slide()
+		return;
 	# Handle jump.
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") && balloons > 0:
+		velocity.y = JUMP_VELOCITY
+	elif Input.is_action_just_pressed("jump") && balloons == 0 && is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -63,9 +75,7 @@ func _physics_process(delta: float) -> void:
 		
 		
 	# Play animation
-	if(isPumping == true):
-		animated_sprite.play("pumping")
-	elif is_on_floor():
+	if is_on_floor():
 		if direction == 0:
 			animated_sprite.play("idle")
 		else:
@@ -81,3 +91,6 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	isPumping = false
