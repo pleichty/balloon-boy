@@ -1,10 +1,18 @@
-[gd_scene load_steps=31 format=3 uid="uid://x8a4or6d3v74"]
+[gd_scene load_steps=33 format=3 uid="uid://x8a4or6d3v74"]
 
 [ext_resource type="Texture2D" uid="uid://b5tnd2efqunf2" path="res://assets/sprites/knight.png" id="1_2101j"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_d5yr4"]
 [ext_resource type="Texture2D" uid="uid://480ccvkpwooy" path="res://assets/sprites/knight_balloons.png" id="3_vhvey"]
 [ext_resource type="PackedScene" uid="uid://6jv51yftki6d" path="res://scenes/balloon.tscn" id="4_4yq73"]
 [ext_resource type="Texture2D" uid="uid://b7ofiyx5siqex" path="res://assets/sprites/balloon2.png" id="4_t4a55"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcavh"]
+atlas = ExtResource("1_2101j")
+region = Rect2(0, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vm64n"]
+atlas = ExtResource("1_2101j")
+region = Rect2(64, 192, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wm6ij"]
 atlas = ExtResource("1_2101j")
@@ -100,6 +108,29 @@ region = Rect2(224, 96, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ylqtj"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcavh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm64n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcavh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm64n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcavh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm64n")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wm6ij")
@@ -201,7 +232,7 @@ script = ExtResource("1_d5yr4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ylqtj")
-animation = &"pumping"
+animation = &"hit"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

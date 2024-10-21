@@ -5,4 +5,4 @@ const SPEED = 0.5
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	camera_2d.position.x += 1 * SPEED
+	camera_2d.position.x += 1 * SPEED 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://c1e6qnfpsg11n"]
+[gd_scene load_steps=20 format=4 uid="uid://c1e6qnfpsg11n"]
 
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="1_0v6os"]
 [ext_resource type="PackedScene" uid="uid://x8a4or6d3v74" path="res://scenes/player.tscn" id="1_420q1"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://uxicjj0q5lhc" path="res://scenes/balloon_pump.tscn" id="9_uikyf"]
 [ext_resource type="PackedScene" uid="uid://b22uemild1u7j" path="res://scenes/level_killzone.tscn" id="9_uyboc"]
 [ext_resource type="PackedScene" uid="uid://c0dwtfi3v630u" path="res://scenes/obstacle.tscn" id="11_4y4gp"]
+[ext_resource type="PackedScene" uid="uid://bjapmh6226i0" path="res://scenes/falling_platform.tscn" id="12_x26pu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jebw3"]
 texture = ExtResource("2_0lh5d")
@@ -305,8 +306,21 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="platform3" parent="Platforms" instance=ExtResource("2_mvwrb")]
-position = Vector2(223, -26)
+[node name="FallingPlatform" parent="Platforms" instance=ExtResource("12_x26pu")]
+z_index = 2
+position = Vector2(735, 11)
+
+[node name="FallingPlatform2" parent="Platforms" instance=ExtResource("12_x26pu")]
+z_index = 2
+position = Vector2(663, 30)
+
+[node name="FallingPlatform3" parent="Platforms" instance=ExtResource("12_x26pu")]
+z_index = 2
+position = Vector2(595, 57)
+
+[node name="FallingPlatform4" parent="Platforms" instance=ExtResource("12_x26pu")]
+z_index = 2
+position = Vector2(526, 91)
 
 [node name="Slime" parent="." instance=ExtResource("6_di3e1")]
 z_index = 1
