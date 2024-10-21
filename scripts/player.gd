@@ -1,3 +1,5 @@
+class_name Player
+
 extends CharacterBody2D
 
 @onready var hit_timer: Timer = $HitTimer
@@ -40,8 +42,8 @@ func blowUpBalloons() -> void:
 	updateBalloonsVisibility()
 
 func enemyHit() -> void:
-	print('hit_timer.is_stopped()', hit_timer.is_stopped())
 	if(hit_timer.is_stopped()):	
+		animated_sprite.play("hit")
 		hit_timer.start();
 		balloons -= 1
 		updateBalloonsVisibility()
@@ -75,7 +77,9 @@ func _physics_process(delta: float) -> void:
 		
 		
 	# Play animation
-	if is_on_floor():
+	if (!hit_timer.is_stopped()):
+		animated_sprite.play("hit")
+	elif is_on_floor():
 		if direction == 0:
 			animated_sprite.play("idle")
 		else:

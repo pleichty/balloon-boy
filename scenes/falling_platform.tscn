@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjapmh6226i0"]
+
+[ext_resource type="PackedScene" uid="uid://bxugn20ylkp4g" path="res://scenes/platform.tscn" id="1_pmhhj"]
+[ext_resource type="Script" path="res://scripts/platform.gd" id="2_rpmfu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e6gch"]
+size = Vector2(30, 2)
+
+[node name="FallingPlatform" instance=ExtResource("1_pmhhj")]
+position = Vector2(-1, -2)
+script = ExtResource("2_rpmfu")
+
+[node name="Timer" type="Timer" parent="." index="2"]
+one_shot = true
+
+[node name="RayCast2D" type="RayCast2D" parent="." index="3"]
+position = Vector2(-1, 0)
+target_position = Vector2(0, -11)
+collision_mask = 2
+
+[node name="player_entered" type="Area2D" parent="." index="4"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_entered" index="0"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_e6gch")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="player_entered" to="." method="_on_player_entered_body_entered"]
