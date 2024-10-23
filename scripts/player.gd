@@ -54,7 +54,10 @@ func enemyHit() -> void:
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():		
-		velocity += get_gravity() * delta
+		if(balloons > 0):
+			velocity += get_gravity() * delta
+		else:
+			velocity += get_gravity() * delta
 		
 	if(isPumping):
 		move_and_slide()

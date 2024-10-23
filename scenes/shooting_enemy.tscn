@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://cduj87hm2o518"]
+
+[ext_resource type="Script" path="res://scripts/shooting_enemy.gd" id="1_7in7t"]
+[ext_resource type="Texture2D" uid="uid://cjmw52u68dwu8" path="res://assets/sprites/slime_purple.png" id="1_8v0qm"]
+[ext_resource type="PackedScene" uid="uid://bohyqy0hr1pal" path="res://scenes/killzone.tscn" id="2_0fyhi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boykw"]
+atlas = ExtResource("1_8v0qm")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rskwu"]
+atlas = ExtResource("1_8v0qm")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vkww"]
+atlas = ExtResource("1_8v0qm")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krwee"]
+atlas = ExtResource("1_8v0qm")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cdnf4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boykw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rskwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vkww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krwee")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xkek4"]
+size = Vector2(9, 12)
+
+[node name="ShootingEnemy" type="Node2D"]
+script = ExtResource("1_7in7t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cdnf4")
+autoplay = "default"
+frame_progress = 0.876136
+flip_h = true
+
+[node name="killzone" parent="AnimatedSprite2D" instance=ExtResource("2_0fyhi")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/killzone"]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_xkek4")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="ShootTimer" type="Timer" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_entered"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
