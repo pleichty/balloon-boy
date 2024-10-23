@@ -1,21 +1,22 @@
-[gd_scene load_steps=21 format=4 uid="uid://c1e6qnfpsg11n"]
+[gd_scene load_steps=23 format=4 uid="uid://c1e6qnfpsg11n"]
 
-[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="1_0v6os"]
-[ext_resource type="PackedScene" uid="uid://x8a4or6d3v74" path="res://scenes/player.tscn" id="1_420q1"]
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_kc2s0"]
-[ext_resource type="Texture2D" uid="uid://dfhof8wxryymt" path="res://assets/sprites/world_tileset.png" id="2_0lh5d"]
-[ext_resource type="PackedScene" uid="uid://bxugn20ylkp4g" path="res://scenes/platform.tscn" id="2_mvwrb"]
-[ext_resource type="PackedScene" uid="uid://dqv5q70a0uv47" path="res://scenes/coin.tscn" id="4_1xusq"]
-[ext_resource type="PackedScene" uid="uid://bmf5n716mv2fw" path="res://scenes/slime.tscn" id="6_di3e1"]
-[ext_resource type="FontFile" uid="uid://cqloi4h551w24" path="res://assets/fonts/PixelOperator8.ttf" id="8_kdc8h"]
-[ext_resource type="PackedScene" uid="uid://uxicjj0q5lhc" path="res://scenes/balloon_pump.tscn" id="9_uikyf"]
-[ext_resource type="PackedScene" uid="uid://b22uemild1u7j" path="res://scenes/level_killzone.tscn" id="9_uyboc"]
-[ext_resource type="PackedScene" uid="uid://c0dwtfi3v630u" path="res://scenes/obstacle.tscn" id="11_4y4gp"]
-[ext_resource type="PackedScene" uid="uid://bjapmh6226i0" path="res://scenes/falling_platform.tscn" id="12_x26pu"]
-[ext_resource type="PackedScene" uid="uid://cduj87hm2o518" path="res://scenes/shooting_enemy.tscn" id="13_ld660"]
+[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="1_rqg3u"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_rfmkc"]
+[ext_resource type="FontFile" uid="uid://cqloi4h551w24" path="res://assets/fonts/PixelOperator8.ttf" id="3_r8bjg"]
+[ext_resource type="Texture2D" uid="uid://dfhof8wxryymt" path="res://assets/sprites/world_tileset.png" id="4_5bqc5"]
+[ext_resource type="PackedScene" uid="uid://x8a4or6d3v74" path="res://scenes/player.tscn" id="5_uliep"]
+[ext_resource type="PackedScene" uid="uid://dqv5q70a0uv47" path="res://scenes/coin.tscn" id="6_6xhhp"]
+[ext_resource type="PackedScene" uid="uid://bxugn20ylkp4g" path="res://scenes/platform.tscn" id="7_guhbf"]
+[ext_resource type="PackedScene" uid="uid://bjapmh6226i0" path="res://scenes/falling_platform.tscn" id="8_k1u0e"]
+[ext_resource type="PackedScene" uid="uid://bmf5n716mv2fw" path="res://scenes/slime.tscn" id="9_vl7qp"]
+[ext_resource type="PackedScene" uid="uid://b22uemild1u7j" path="res://scenes/level_killzone.tscn" id="10_0ltrt"]
+[ext_resource type="PackedScene" uid="uid://uxicjj0q5lhc" path="res://scenes/balloon_pump.tscn" id="11_2vifs"]
+[ext_resource type="PackedScene" uid="uid://c0dwtfi3v630u" path="res://scenes/obstacle.tscn" id="12_q0i3h"]
+[ext_resource type="PackedScene" uid="uid://cduj87hm2o518" path="res://scenes/shooting_enemy.tscn" id="13_mvkwh"]
+[ext_resource type="PackedScene" uid="uid://gyouea7riuje" path="res://scenes/level_finish.tscn" id="14_fufxw"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jebw3"]
-texture = ExtResource("2_0lh5d")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uqra4"]
+texture = ExtResource("4_5bqc5")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
@@ -190,7 +191,7 @@ texture = ExtResource("2_0lh5d")
 
 [sub_resource type="TileSet" id="TileSet_st5j8"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_jebw3")
+sources/0 = SubResource("TileSetAtlasSource_uqra4")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3ygrs"]
 
@@ -234,18 +235,21 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7fok2"]
 
-[node name="Game" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqncj"]
+size = Vector2(41, 20)
+
+[node name="Level1" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(754, 28)
+position = Vector2(32, 43)
 zoom = Vector2(4, 4)
 limit_bottom = 120
 limit_smoothed = true
-script = ExtResource("1_0v6os")
+script = ExtResource("1_rqg3u")
 
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("1_kc2s0")
+script = ExtResource("2_rfmkc")
 
 [node name="ScoreLabel" type="Label" parent="GameManager"]
 offset_left = 196.0
@@ -253,7 +257,7 @@ offset_top = 9.0
 offset_right = 330.0
 offset_bottom = 20.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("8_kdc8h")
+theme_override_fonts/font = ExtResource("3_r8bjg")
 theme_override_font_sizes/font_size = 8
 text = "spacebar to jump"
 
@@ -270,8 +274,8 @@ tile_set = SubResource("TileSet_st5j8")
 tile_map_data = PackedByteArray("AAADAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAACAAYAAAAAAAAAAAABAAYAAAAAAAAAAAAHAAQAAAABAAEAAAAIAAQAAAAAAAAAAAALAAYAAAAAAAAAAAAMAAYAAAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAAMAP7/AAAAAAAAAAALAP7/AAAAAAAAAAAKAP7/AAAAAAAAAAAJAP7/AAAAAAAAAAANAAYAAAAAAAAAAAAOAAYAAAAAAAAAAAAPAAYAAAAAAAAAAAAFAAQAAAABAAEAAAAGAAQAAAABAAEAAAAHAAUAAAABAAEAAAAIAAUAAAABAAEAAAAIAAYAAAAAAAEAAAAHAAYAAAAAAAEAAAAGAAYAAAAAAAEAAAAGAAUAAAAAAAEAAAAFAAUAAAAAAAEAAAAEAAUAAAAAAAEAAAADAAUAAAAAAAEAAAADAAYAAAAAAAEAAAAEAAYAAAAAAAEAAAAFAAYAAAAAAAEAAAABAAcAAAAAAAEAAAACAAcAAAAAAAEAAAADAAcAAAAAAAEAAAAEAAcAAAAAAAEAAAAFAAcAAAAAAAEAAAAGAAcAAAAAAAEAAAAHAAcAAAAAAAEAAAAIAAcAAAAAAAEAAAALAAcAAAAAAAEAAAAMAAcAAAAAAAEAAAANAAcAAAAAAAEAAAAOAAcAAAAAAAEAAAAPAAcAAAAAAAEAAAAOAAUAAAAAAAUAAAAOAAQAAAAAAAQAAAAOAAMAAAAAAAQAAAAOAAIAAAAAAAMAAAAYAAYAAAAAAAAAAAAZAAYAAAAAAAAAAAAaAAYAAAAAAAAAAAAbAAYAAAAAAAAAAAAcAAYAAAAAAAAAAAAdAAYAAAAAAAAAAAAYAAcAAAAAAAEAAAAZAAcAAAAAAAEAAAAaAAcAAAAAAAEAAAAbAAcAAAAAAAEAAAAcAAcAAAAAAAEAAAAdAAcAAAAAAAEAAAATAP7/AAAAAAAAAAAUAP7/AAAAAAAAAAAVAP7/AAAAAAAAAAAWAP7/AAAAAAAAAAAXAP7/AAAAAAAAAAAXAP3/AAAAAAAAAAAXAPz/AAAAAAAAAAAYAP3/AAAAAAAAAAAYAP7/AAAAAAAAAAATAP//AAAAAAEAAAAUAP//AAAAAAEAAAAVAP//AAAAAAEAAAAWAP//AAAAAAEAAAAXAP//AAAAAAEAAAAYAP//AAAAAAEAAAALAAUAAAAAAAAAAAAPAAUAAAAAAAAAAAAuAAYAAAAAAAAAAAAvAAYAAAAAAAAAAAAwAAYAAAAAAAAAAAAxAAYAAAAAAAAAAAAyAAYAAAAAAAAAAAAzAAYAAAAAAAAAAAA0AAYAAAAAAAAAAAA1AAYAAAAAAAAAAAA2AAYAAAAAAAAAAAA3AAYAAAAAAAAAAAA4AAYAAAAAAAAAAAA5AAYAAAAAAAAAAAA6AAYAAAAAAAAAAAA7AAYAAAAAAAAAAAA8AAYAAAAAAAAAAAA9AAYAAAAAAAAAAAA+AAYAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_st5j8")
 
-[node name="Player" parent="." instance=ExtResource("1_420q1")]
-position = Vector2(744, 78)
+[node name="Player" parent="." instance=ExtResource("5_uliep")]
+position = Vector2(27, 79)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Player"]
 visible = false
@@ -284,21 +288,21 @@ shape = SubResource("WorldBoundaryShape2D_3ygrs")
 
 [node name="Coins" type="Node" parent="."]
 
-[node name="Coin" parent="Coins" instance=ExtResource("4_1xusq")]
+[node name="Coin" parent="Coins" instance=ExtResource("6_6xhhp")]
 position = Vector2(322, -46)
 
-[node name="Coin2" parent="Coins" instance=ExtResource("4_1xusq")]
+[node name="Coin2" parent="Coins" instance=ExtResource("6_6xhhp")]
 position = Vector2(186, -39)
 
-[node name="Coin3" parent="Coins" instance=ExtResource("4_1xusq")]
+[node name="Coin3" parent="Coins" instance=ExtResource("6_6xhhp")]
 position = Vector2(190, 75)
 
-[node name="Coin4" parent="Coins" instance=ExtResource("4_1xusq")]
+[node name="Coin4" parent="Coins" instance=ExtResource("6_6xhhp")]
 position = Vector2(394, 82)
 
 [node name="Platforms" type="Node" parent="."]
 
-[node name="moving platform" parent="Platforms" instance=ExtResource("2_mvwrb")]
+[node name="moving platform" parent="Platforms" instance=ExtResource("7_guhbf")]
 position = Vector2(272, 103)
 
 [node name="move" type="AnimationPlayer" parent="Platforms/moving platform"]
@@ -307,51 +311,60 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="FallingPlatform" parent="Platforms" instance=ExtResource("12_x26pu")]
+[node name="FallingPlatform" parent="Platforms" instance=ExtResource("8_k1u0e")]
 z_index = 2
 position = Vector2(735, 11)
 
-[node name="FallingPlatform2" parent="Platforms" instance=ExtResource("12_x26pu")]
+[node name="FallingPlatform2" parent="Platforms" instance=ExtResource("8_k1u0e")]
 z_index = 2
 position = Vector2(663, 30)
 
-[node name="FallingPlatform3" parent="Platforms" instance=ExtResource("12_x26pu")]
+[node name="FallingPlatform3" parent="Platforms" instance=ExtResource("8_k1u0e")]
 z_index = 2
 position = Vector2(595, 57)
 
-[node name="FallingPlatform4" parent="Platforms" instance=ExtResource("12_x26pu")]
+[node name="FallingPlatform4" parent="Platforms" instance=ExtResource("8_k1u0e")]
 z_index = 2
 position = Vector2(526, 91)
 
-[node name="Slime" parent="." instance=ExtResource("6_di3e1")]
+[node name="Slime" parent="." instance=ExtResource("9_vl7qp")]
 z_index = 1
 position = Vector2(212, 85)
 
-[node name="LevelKillzone" parent="." instance=ExtResource("9_uyboc")]
+[node name="LevelKillzone" parent="." instance=ExtResource("10_0ltrt")]
 position = Vector2(0, 131)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelKillzone"]
 shape = SubResource("WorldBoundaryShape2D_7fok2")
 
-[node name="BalloonPump" parent="." instance=ExtResource("9_uikyf")]
+[node name="BalloonPump" parent="." instance=ExtResource("11_2vifs")]
 z_index = 4
 position = Vector2(94, 39)
 
 [node name="Node" type="Node" parent="."]
 
-[node name="Obstacle" parent="Node" instance=ExtResource("11_4y4gp")]
+[node name="Obstacle" parent="Node" instance=ExtResource("12_q0i3h")]
 z_index = 7
 y_sort_enabled = true
 position = Vector2(312, 61)
 
-[node name="Obstacle2" parent="Node" instance=ExtResource("11_4y4gp")]
+[node name="Obstacle2" parent="Node" instance=ExtResource("12_q0i3h")]
 position = Vector2(374, 59)
 
-[node name="Obstacle3" parent="Node" instance=ExtResource("11_4y4gp")]
+[node name="Obstacle3" parent="Node" instance=ExtResource("12_q0i3h")]
 position = Vector2(457, 58)
 
-[node name="ShootingEnemy" parent="." instance=ExtResource("13_ld660")]
+[node name="ShootingEnemy" parent="." instance=ExtResource("13_mvkwh")]
 visibility_layer = 2
 z_index = 3
 y_sort_enabled = true
 position = Vector2(997, 83)
+
+[node name="LevelFinish" parent="." instance=ExtResource("14_fufxw")]
+position = Vector2(876, 82)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelFinish"]
+visibility_layer = 2
+position = Vector2(10.5, 0)
+shape = SubResource("RectangleShape2D_bqncj")
