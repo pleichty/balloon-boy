@@ -1,10 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://x8a4or6d3v74"]
+[gd_scene load_steps=32 format=3 uid="uid://x8a4or6d3v74"]
 
 [ext_resource type="Texture2D" uid="uid://b5tnd2efqunf2" path="res://assets/sprites/knight.png" id="1_2101j"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_d5yr4"]
 [ext_resource type="Texture2D" uid="uid://480ccvkpwooy" path="res://assets/sprites/knight_balloons.png" id="3_vhvey"]
 [ext_resource type="PackedScene" uid="uid://6jv51yftki6d" path="res://scenes/balloon.tscn" id="4_4yq73"]
-[ext_resource type="Texture2D" uid="uid://b7ofiyx5siqex" path="res://assets/sprites/balloon2.png" id="4_t4a55"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tcavh"]
 atlas = ExtResource("1_2101j")
@@ -227,7 +226,9 @@ radius = 5.0
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 collision_layer = 2
+collision_mask = 513
 script = ExtResource("1_d5yr4")
+balloonScene = ExtResource("4_4yq73")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -239,16 +240,11 @@ autoplay = "idle"
 position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_li5pm")
 
-[node name="balloon1" parent="." instance=ExtResource("4_4yq73")]
-unique_name_in_owner = true
-
-[node name="balloon2" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(7, -9)
-texture = ExtResource("4_t4a55")
-
 [node name="HitTimer" type="Timer" parent="."]
 wait_time = 1.578
 one_shot = true
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

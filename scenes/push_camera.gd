@@ -1,15 +1,15 @@
 extends Camera2D
 
-const SPEED = 0.0
-@onready var camera_2d: Camera2D = $"."
+const SPEED = 10
 var direction = 'horizontal'
+@onready var collision_shape_2d: CollisionShape2D = $RigidBody2D/CollisionShape2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if(direction == 'horizontal'):
-		camera_2d.position.x += 1 * SPEED 
+		position.x += 1 * delta * SPEED 
 	elif(direction == 'vertical'):
-		camera_2d.position.y -= 1 * SPEED
+		position.y -= 1 * delta * SPEED
 
 func swapDirection(value) -> void:
 	print('value', value)

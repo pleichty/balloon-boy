@@ -1,15 +1,18 @@
-extends Camera2D
+extends CharacterBody2D
 
-const SPEED = 0.0
-@onready var camera_2d: Camera2D = $"."
+const SPEED = 1500
+
 var direction = 'horizontal'
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if(direction == 'horizontal'):
-		camera_2d.position.x += 1 * SPEED 
+		velocity.x = 1 * delta * SPEED 
 	elif(direction == 'vertical'):
-		camera_2d.position.y -= 1 * SPEED
+		velocity.y =  1 * delta * SPEED
+		
+	move_and_slide()
+
 
 func swapDirection(value) -> void:
 	print('value', value)

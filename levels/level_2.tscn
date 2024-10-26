@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://daw4mgkrchfby"]
+[gd_scene load_steps=20 format=4 uid="uid://daw4mgkrchfby"]
 
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="1_vdkp4"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_28kjg"]
@@ -192,8 +192,6 @@ texture = ExtResource("4_tu2ci")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_u5hyv")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_j1h5i"]
-
 [sub_resource type="Animation" id="Animation_22mok"]
 length = 0.001
 tracks/0/type = "value"
@@ -272,15 +270,6 @@ tile_set = SubResource("TileSet_4wg0i")
 
 [node name="Player" parent="." instance=ExtResource("5_b0myu")]
 position = Vector2(29, 81)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Player"]
-visible = false
-position = Vector2(-1, 31)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/StaticBody2D"]
-visible = false
-position = Vector2(2, 0)
-shape = SubResource("WorldBoundaryShape2D_j1h5i")
 
 [node name="Coins" type="Node" parent="."]
 

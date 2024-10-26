@@ -3,8 +3,8 @@ class_name Player
 extends CharacterBody2D
 
 @onready var hit_timer: Timer = $HitTimer
-@onready var balloon_1: Sprite2D = %balloon1
-@onready var balloon_2: Sprite2D = %balloon2
+@export var balloonScene : PackedScene
+var balloonsArr : Array[Sprite2D]
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
@@ -19,14 +19,14 @@ func stopPumping() -> void:
 
 func updateBalloonsVisibility() -> void:
 	if(balloons == 2):
-		balloon_1.visible = false
-		balloon_2.visible = true
+		balloonsArr[0].visible = false
+		balloonsArr[1].visible = true
 	if (balloons == 1):
-		balloon_1.visible = true
-		balloon_2.visible = false
+		balloonsArr[0].visible = true
+		balloonsArr[1].visible = false
 	elif (balloons == 0):
-		balloon_1.visible = false
-		balloon_2.visible = false
+		balloonsArr[0].visible = false
+		balloonsArr[1].visible = false
 
 func blowUpBalloons() -> void:
 	if(balloons < 2):
@@ -50,12 +50,22 @@ func enemyHit() -> void:
 		if(balloons < 0):
 			GameManager.handlePlayerDeath()
 
+func _ready() -> void:
+	var tempBalloon = balloonScene.instantiate()
+	var tempBalloon2 = balloonScene.instantiate()
+	add_child.call_deferred(tempBalloon) 
+	add_child.call_deferred(tempBalloon2)
+	balloonsArr.append(tempBalloon)
+	balloonsArr.append(tempBalloon2)
+	tempBalloon.position = Vector2(4,-8)
+	tempBalloon2.position = Vector2(0 , -8)  
 
+	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():		
 		if(balloons > 0):
-			velocity += get_gravity() * delta
+			velocity += get_gravity() * delta * .5
 		else:
 			velocity += get_gravity() * delta
 		
@@ -64,7 +74,7 @@ func _physics_process(delta: float) -> void:
 		return;
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") && balloons > 0:
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY * .5
 	elif Input.is_action_just_pressed("jump") && balloons == 0 && is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
@@ -101,3 +111,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	isPumping = false
+
+
+func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
+	GameManager.handlePlayerDeath()
