@@ -4,29 +4,19 @@ extends CharacterBody2D
 
 @onready var hit_timer: Timer = $HitTimer
 @export var balloonScene : PackedScene
-var balloonsArr : Array[Sprite2D]
+var balloonRef : AnimatedSprite2D
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 var balloons = 2
 var balloonPumps = 0
 var isPumping = false
+var releasedBalloons = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func stopPumping() -> void:
 	isPumping = false
-
-func updateBalloonsVisibility() -> void:
-	if(balloons == 2):
-		balloonsArr[0].visible = false
-		balloonsArr[1].visible = true
-	if (balloons == 1):
-		balloonsArr[0].visible = true
-		balloonsArr[1].visible = false
-	elif (balloons == 0):
-		balloonsArr[0].visible = false
-		balloonsArr[1].visible = false
 
 func blowUpBalloons() -> void:
 	if(balloons < 2):
@@ -39,27 +29,37 @@ func blowUpBalloons() -> void:
 			balloons += 1
 	else:
 		isPumping = false
-	updateBalloonsVisibility()
 
 func enemyHit() -> void:
 	if(hit_timer.is_stopped()):	
 		animated_sprite.play("hit")
 		hit_timer.start();
 		balloons -= 1
-		updateBalloonsVisibility()
-		if(balloons < 0):
+		if(balloons == 1):
+			balloonRef.play('single')
+		elif(balloons == 0):
+			balloonRef.visible = false
+			balloonRef = null
+		else:
 			GameManager.handlePlayerDeath()
 
 func _ready() -> void:
 	var tempBalloon = balloonScene.instantiate()
-	var tempBalloon2 = balloonScene.instantiate()
 	add_child.call_deferred(tempBalloon) 
-	add_child.call_deferred(tempBalloon2)
-	balloonsArr.append(tempBalloon)
-	balloonsArr.append(tempBalloon2)
-	tempBalloon.position = Vector2(4,-8)
-	tempBalloon2.position = Vector2(0 , -8)  
-
+	balloonRef = tempBalloon
+	tempBalloon.position = Vector2(0,-14)  
+	
+func attachBalloons(attached: AnimatedSprite2D, fullBalloons: bool) -> void:
+	if not is_on_floor():
+		get_tree().root.remove_child.call_deferred(attached)
+		add_child.call_deferred(attached)  
+		balloonRef = attached
+		balloonRef.z_index = -1
+		attached.position = Vector2(0,-14)  
+		if(fullBalloons):
+			balloons = 2
+		else:
+			balloons = 1
 	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -72,6 +72,12 @@ func _physics_process(delta: float) -> void:
 	if(isPumping):
 		move_and_slide()
 		return;
+		
+	# handle releasing balloons
+	if Input.is_action_just_pressed("release") && balloons > 0:
+		releasedBalloons = true
+		balloons = 0
+		
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") && balloons > 0:
 		velocity.y = JUMP_VELOCITY * .5
@@ -106,6 +112,14 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		
+	if releasedBalloons:
+		balloonRef.z_index = 5
+		remove_child.call_deferred(balloonRef)
+		get_tree().root.add_child.call_deferred(balloonRef)
+		balloonRef.start(Vector2(position.x, position.y - 20))
+		releasedBalloons = false
+		balloonRef = null
 
 	move_and_slide()
 
