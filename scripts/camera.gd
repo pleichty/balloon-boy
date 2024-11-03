@@ -14,5 +14,4 @@ func _physics_process(delta: float) -> void:
 
 
 func swapDirection(value) -> void:
-	print('value', value)
 	direction = value

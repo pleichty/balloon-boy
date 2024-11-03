@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c0dwtfi3v630u"]
 
-[ext_resource type="Texture2D" uid="uid://cgqipy8pwofjc" path="res://assets/spike.png" id="1_a1b3c"]
+[ext_resource type="Texture2D" uid="uid://d3uorio3o7p08" path="res://assets/sprites/floating-spike.png" id="1_cclob"]
 [ext_resource type="PackedScene" uid="uid://bohyqy0hr1pal" path="res://scenes/killzone.tscn" id="2_hb1aa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4r16w"]
@@ -10,10 +10,10 @@ radius = 6.0
 z_index = 6
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_a1b3c")
+texture = ExtResource("1_cclob")
 
 [node name="killzone" parent="Sprite2D" instance=ExtResource("2_hb1aa")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/killzone"]
-position = Vector2(0, -3)
+position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_4r16w")

@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 @onready var hit_timer: Timer = $HitTimer
 @export var balloonScene : PackedScene
-var balloonRef : CharacterBody2D
+var balloonRef : StaticBody2D
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
@@ -14,6 +14,8 @@ var isPumping = false
 var releasedBalloons = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var with_balloons_collision: CollisionShape2D = $WithBalloonsCollision
+@onready var without_balloons_collision: CollisionShape2D = $WithoutBalloonsCollision
 
 func stopPumping() -> void:
 	isPumping = false
@@ -30,8 +32,10 @@ func blowUpBalloons() -> void:
 				var tempBalloon = balloonScene.instantiate()
 				add_child(tempBalloon) 
 				balloonRef = tempBalloon
-				tempBalloon.position = Vector2(0,-14)  
+				tempBalloon.position = Vector2(0,-8)  
 				tempBalloon.updateAnimation(1)
+				with_balloons_collision.disabled = false
+				without_balloons_collision.disabled = true
 			else:
 				balloonRef.updateAnimation(2)
 			balloons += 1
@@ -49,25 +53,31 @@ func enemyHit() -> void:
 			balloonRef.updateAnimation(0)
 			balloonRef.visible = false
 			balloonRef = null
+			with_balloons_collision.disabled = true
+			without_balloons_collision.disabled = false
 		else:
 			GameManager.handlePlayerDeath()
 
 func _ready() -> void:
+	with_balloons_collision.disabled = false
+	without_balloons_collision.disabled = true
 	var tempBalloon = balloonScene.instantiate()
 	var joint = PinJoint2D.new()
 	add_child(tempBalloon)
 	add_child(joint)
 	joint.node_a = tempBalloon.get_path()
 	balloonRef = tempBalloon
-	tempBalloon.position = Vector2(0,-12)  
+	tempBalloon.position = Vector2(0,-8)  
 	
-func attachBalloons(attached: CharacterBody2D, fullBalloons: bool) -> void:
+func attachBalloons(attached: StaticBody2D, fullBalloons: bool) -> void:
 	if not is_on_floor():
+		with_balloons_collision.disabled = false
+		without_balloons_collision.disabled = true
 		get_tree().root.remove_child(attached)
 		add_child(attached)  
 		balloonRef = attached
 		balloonRef.z_index = -1
-		attached.position = Vector2(0,-12)  
+		attached.position = Vector2(0,-8)  
 		if(fullBalloons):
 			balloons = 2
 		else:
@@ -87,6 +97,8 @@ func _physics_process(delta: float) -> void:
 		
 	# handle releasing balloons
 	if Input.is_action_just_pressed("release") && balloons > 0:
+		with_balloons_collision.disabled = true
+		without_balloons_collision.disabled = false
 		releasedBalloons = true
 		balloons = 0
 		

@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bmf5n716mv2fw" path="res://scenes/slime.tscn" id="9_k3inp"]
 [ext_resource type="PackedScene" uid="uid://b22uemild1u7j" path="res://scenes/level_killzone.tscn" id="10_sogym"]
 [ext_resource type="PackedScene" uid="uid://uxicjj0q5lhc" path="res://scenes/balloon_pump.tscn" id="11_sx643"]
-[ext_resource type="PackedScene" uid="uid://c0dwtfi3v630u" path="res://scenes/obstacle.tscn" id="12_y2qr1"]
+[ext_resource type="PackedScene" uid="uid://c0dwtfi3v630u" path="res://scenes/floating-spike.tscn" id="12_y2qr1"]
 [ext_resource type="PackedScene" uid="uid://cduj87hm2o518" path="res://scenes/shooting_enemy.tscn" id="13_jpj0g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u5hyv"]

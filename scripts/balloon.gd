@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends StaticBody2D
 
 class_name Balloons
 @onready var balloons: Balloons = $"."
@@ -17,10 +17,6 @@ func start(pos):
 func _process(delta: float) -> void:
 	if(isFloating):
 		position.y -= speed * delta
-		
-func onHit() -> void:
-	get_parent().enemyHit()
-
 	
 func updateAnimation(incomingBalloonCount: int) -> void:
 	if(incomingBalloonCount == 2):
