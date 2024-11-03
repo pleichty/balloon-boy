@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bmf5n716mv2fw" path="res://scenes/slime.tscn" id="9_t3e4j"]
 [ext_resource type="PackedScene" uid="uid://b22uemild1u7j" path="res://scenes/level_killzone.tscn" id="10_hoeax"]
 [ext_resource type="PackedScene" uid="uid://uxicjj0q5lhc" path="res://scenes/balloon_pump.tscn" id="11_iwcys"]
-[ext_resource type="PackedScene" uid="uid://c0dwtfi3v630u" path="res://scenes/obstacle.tscn" id="12_i43fp"]
+[ext_resource type="PackedScene" uid="uid://c0dwtfi3v630u" path="res://scenes/floating-spike.tscn" id="12_i43fp"]
 [ext_resource type="PackedScene" uid="uid://cduj87hm2o518" path="res://scenes/shooting_enemy.tscn" id="13_o4yw1"]
 [ext_resource type="PackedScene" uid="uid://c1rli8w1rvsef" path="res://scenes/vertical_camera_change.tscn" id="14_p63c2"]
 [ext_resource type="PackedScene" uid="uid://c1ih5xgyfo4e" path="res://scenes/push-camera.tscn" id="15_4ujbc"]

@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var player: CharacterBody2D = $"../Player"
+@onready var player: Player = %Player
 @onready var interaction: Sprite2D = $interaction
 var isInteractable = false
 
