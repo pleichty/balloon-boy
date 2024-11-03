@@ -4,58 +4,58 @@
 [ext_resource type="Texture2D" uid="uid://dqcq1jegdcdfy" path="res://assets/sprites/balloon.png" id="2_6m6yg"]
 [ext_resource type="Script" path="res://scripts/balloon.gd" id="2_hwl08"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hkt35"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fbxi"]
 atlas = ExtResource("1_mbvef")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_171pv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nad5"]
 atlas = ExtResource("1_mbvef")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e4uas"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7t2cm"]
 atlas = ExtResource("1_mbvef")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q6he0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ec7a3"]
 atlas = ExtResource("1_mbvef")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2c4qa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2323"]
 atlas = ExtResource("2_6m6yg")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ayxyh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_di1li"]
 atlas = ExtResource("2_6m6yg")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7wx5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_by1ss"]
 atlas = ExtResource("2_6m6yg")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u24li"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kep4b"]
 atlas = ExtResource("2_6m6yg")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_isyvq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_204xl"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hkt35")
+"texture": SubResource("AtlasTexture_3fbxi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_171pv")
+"texture": SubResource("AtlasTexture_7nad5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e4uas")
+"texture": SubResource("AtlasTexture_7t2cm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q6he0")
+"texture": SubResource("AtlasTexture_ec7a3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e4uas")
+"texture": SubResource("AtlasTexture_7t2cm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_171pv")
+"texture": SubResource("AtlasTexture_7nad5")
 }],
 "loop": true,
 "name": &"double",
@@ -63,22 +63,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2c4qa")
+"texture": SubResource("AtlasTexture_r2323")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ayxyh")
+"texture": SubResource("AtlasTexture_di1li")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_h7wx5")
+"texture": SubResource("AtlasTexture_by1ss")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u24li")
+"texture": SubResource("AtlasTexture_kep4b")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_h7wx5")
+"texture": SubResource("AtlasTexture_by1ss")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ayxyh")
+"texture": SubResource("AtlasTexture_di1li")
 }],
 "loop": true,
 "name": &"single",
@@ -91,32 +91,33 @@ radius = 7.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nmxni"]
 size = Vector2(9, 8)
 
-[node name="balloons" type="AnimatedSprite2D"]
+[node name="balloons" type="CharacterBody2D"]
 z_index = -1
 position = Vector2(5, -11)
-sprite_frames = SubResource("SpriteFrames_isyvq")
-animation = &"double"
-autoplay = "double"
-script = ExtResource("2_hwl08")
-
-[node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 513
+script = ExtResource("2_hwl08")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-4, -3)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -10)
+sprite_frames = SubResource("SpriteFrames_204xl")
+animation = &"single"
+autoplay = "double"
+frame_progress = 0.100936
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -8)
 shape = SubResource("CircleShape2D_37mnh")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(4, 5)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(4, -10)
 shape = SubResource("CircleShape2D_37mnh")
 
 [node name="balloonString" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="balloonStringCollision" type="CollisionShape2D" parent="balloonString"]
-position = Vector2(-1.5, 12)
+position = Vector2(-1, 2)
 shape = SubResource("RectangleShape2D_nmxni")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_shape_entered" from="balloonString" to="." method="_on_balloon_string_body_shape_entered"]
