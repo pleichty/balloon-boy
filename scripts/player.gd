@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 @onready var hit_timer: Timer = $HitTimer
 @export var balloonScene : PackedScene
-var balloonRef : AnimatedSprite2D
+var balloonRef : CharacterBody2D
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
@@ -26,18 +26,27 @@ func blowUpBalloons() -> void:
 			balloonPumps += 1
 		else:
 			balloonPumps = 0
+			if(balloons == 0):
+				var tempBalloon = balloonScene.instantiate()
+				add_child(tempBalloon) 
+				balloonRef = tempBalloon
+				tempBalloon.position = Vector2(0,-14)  
+				tempBalloon.updateAnimation(1)
+			else:
+				balloonRef.updateAnimation(2)
 			balloons += 1
 	else:
 		isPumping = false
 
 func enemyHit() -> void:
-	if(hit_timer.is_stopped()):	
+	if(hit_timer.is_stopped()):	 
 		animated_sprite.play("hit")
 		hit_timer.start();
 		balloons -= 1
 		if(balloons == 1):
-			balloonRef.play('single')
+			balloonRef.updateAnimation(1) 
 		elif(balloons == 0):
+			balloonRef.updateAnimation(0)
 			balloonRef.visible = false
 			balloonRef = null
 		else:
@@ -45,17 +54,20 @@ func enemyHit() -> void:
 
 func _ready() -> void:
 	var tempBalloon = balloonScene.instantiate()
-	add_child.call_deferred(tempBalloon) 
+	var joint = PinJoint2D.new()
+	add_child(tempBalloon)
+	add_child(joint)
+	joint.node_a = tempBalloon.get_path()
 	balloonRef = tempBalloon
-	tempBalloon.position = Vector2(0,-14)  
+	tempBalloon.position = Vector2(0,-12)  
 	
-func attachBalloons(attached: AnimatedSprite2D, fullBalloons: bool) -> void:
+func attachBalloons(attached: CharacterBody2D, fullBalloons: bool) -> void:
 	if not is_on_floor():
-		get_tree().root.remove_child.call_deferred(attached)
-		add_child.call_deferred(attached)  
+		get_tree().root.remove_child(attached)
+		add_child(attached)  
 		balloonRef = attached
 		balloonRef.z_index = -1
-		attached.position = Vector2(0,-14)  
+		attached.position = Vector2(0,-12)  
 		if(fullBalloons):
 			balloons = 2
 		else:
