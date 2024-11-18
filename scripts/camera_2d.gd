@@ -12,5 +12,4 @@ func _process(_delta: float) -> void:
 		camera_2d.position.y -= 1 * SPEED
 
 func swapDirection(value) -> void:
-	print('value', value)
 	direction = value
