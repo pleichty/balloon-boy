@@ -12,5 +12,4 @@ func _process(delta: float) -> void:
 		position.y -= 1 * delta * SPEED
 
 func swapDirection(value) -> void:
-	print('value', value)
 	direction = value

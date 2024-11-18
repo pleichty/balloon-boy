@@ -30,7 +30,7 @@ func updateAnimation(incomingBalloonCount: int) -> void:
 		balloonCount = 0
 
 
-func _on_balloon_string_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_balloon_string_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if(body is Player):
 		body.attachBalloons(self, balloonCount == 2)
 		isFloating = false

@@ -13,5 +13,4 @@ func _on_timer_timeout() -> void:
 
 func _on_player_entered_body_entered(body: Node2D) -> void:
 	if(body is Player && body.is_on_floor()):
-		print('start falling')
 		timer.start()

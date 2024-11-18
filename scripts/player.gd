@@ -67,21 +67,23 @@ func _ready() -> void:
 	add_child(joint)
 	joint.node_a = tempBalloon.get_path()
 	balloonRef = tempBalloon
-	tempBalloon.position = Vector2(0,-8)  
+	tempBalloon.position = Vector2(0,-10)  
 	
 func attachBalloons(attached: StaticBody2D, fullBalloons: bool) -> void:
-	if not is_on_floor():
-		with_balloons_collision.disabled = false
-		without_balloons_collision.disabled = true
-		get_tree().root.remove_child(attached)
-		add_child(attached)  
+	if not is_on_floor() && balloons == 0 :
+		with_balloons_collision.set_deferred("disabled", false)
+		without_balloons_collision.set_deferred("disabled", true)
+		get_tree().root.remove_child.call_deferred(attached)
+		add_child.call_deferred(attached)   
 		balloonRef = attached
 		balloonRef.z_index = -1
-		attached.position = Vector2(0,-8)  
+		attached.position = Vector2(0,-10)  
 		if(fullBalloons):
 			balloons = 2
+			balloonRef.updateAnimation(2)
 		else:
 			balloons = 1
+			balloonRef.updateAnimation(1)
 	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -127,6 +129,8 @@ func _physics_process(delta: float) -> void:
 			animated_sprite.play("idle")
 		else:
 			animated_sprite.play("run")
+	elif(balloons > 0):
+		animated_sprite.play('fly')
 	else:
 		animated_sprite.play("jump")
 
